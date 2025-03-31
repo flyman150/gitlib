@@ -1,0 +1,6 @@
+/home/wgb/github/gitlib/build/CMakeFiles/tcp_client.dir
+/home/wgb/github/gitlib/build/CMakeFiles/tcp_server.dir
+/home/wgb/github/gitlib/build/CMakeFiles/tcp_client_test.dir
+/home/wgb/github/gitlib/build/CMakeFiles/test.dir
+/home/wgb/github/gitlib/build/CMakeFiles/edit_cache.dir
+/home/wgb/github/gitlib/build/CMakeFiles/rebuild_cache.dir

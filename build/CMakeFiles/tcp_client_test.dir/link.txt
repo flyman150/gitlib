@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -march=native -O3 -DNDEBUG CMakeFiles/tcp_client_test.dir/src/tcp_client.cpp.o CMakeFiles/tcp_client_test.dir/tests/test_tcp_client.cpp.o -o tcp_client_test  -lpthread /usr/lib/x86_64-linux-gnu/libgtest_main.a /usr/lib/x86_64-linux-gnu/libgtest.a 

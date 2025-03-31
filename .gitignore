@@ -1,0 +1,30 @@
+# CMake生成的文件
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+# CMake输出日志
+CMakeOutput.log
+CMakeError.log
+
+# 编译生成的文件
+*.o
+*.obj
+*.exe
+*.out
+*.app
+
+# IDE生成的文件
+.vscode/
+.idea/
+*.swp
+*~
+
+# 系统文件
+.DS_Store
+Thumbs.db 

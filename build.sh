@@ -56,4 +56,7 @@ echo "   ./build/tcp_server"
 echo "2. 运行客户端："
 echo "   ./build/tcp_client"
 echo "3. 运行测试："
-echo "   ./build/tcp_client_test" 
+echo "   ./build/tcp_client_test"
+
+# 重置终端设置
+echo -e "\033[0m"  # 重置所有属性 

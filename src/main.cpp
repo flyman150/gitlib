@@ -77,9 +77,7 @@ void clientThread(const int clientId,
                  const int serverPort,
                  const int messageInterval) {
     // 创建TCP客户端实例
-    std::vector<std::string> serverIps = {serverIp};
-    std::vector<int> serverPorts = {serverPort};
-    TcpClient client(serverIps, serverPorts, 3000);
+    TcpClient client(serverIp, serverPort);
     
     // 设置连接状态回调
     client.setConnectionCallback([clientId](bool connected) {
@@ -92,13 +90,11 @@ void clientThread(const int clientId,
     
     // 主循环
     while (gRunning) {
-        if (client.isConnected()) {
-            std::string message = "客户端 " + std::to_string(clientId) + " 发送的消息";
-            if (client.sendMessage(message)) {
-                std::cout << "客户端 " << clientId << " 消息发送成功" << std::endl;
-            } else {
-                std::cout << "客户端 " << clientId << " 消息发送失败" << std::endl;
-            }
+        std::string message = "客户端 " + std::to_string(clientId) + " 发送的消息";
+        if (client.send(message)) {
+            std::cout << "客户端 " << clientId << " 消息发送成功" << std::endl;
+        } else {
+            std::cout << "客户端 " << clientId << " 消息发送失败" << std::endl;
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(messageInterval));
     }

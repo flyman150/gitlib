@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 -march=native -O3 -DNDEBUG CMakeFiles/tcp_client.dir/src/main.cpp.o CMakeFiles/tcp_client.dir/src/tcp_client.cpp.o -o tcp_client 

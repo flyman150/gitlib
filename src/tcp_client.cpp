@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cstring>
 #include <errno.h>
+#include <algorithm>
 
 TcpClient::TcpClient(const std::string& ip, int port)
     : server_ip_(ip)
@@ -41,20 +42,43 @@ void TcpClient::stop() {
     if (!running_) return;
     
     running_ = false;
+    
+    // 关闭socket
     if (sock_fd_ != -1) {
         close(sock_fd_);
         sock_fd_ = -1;
     }
     
+    // 等待重连线程结束
     if (reconnect_thread_.joinable()) {
         reconnect_thread_.join();
+    }
+    
+    connected_ = false;
+    if (connection_callback_) {
+        connection_callback_(false);
     }
 }
 
 bool TcpClient::connect() {
+    // 如果已经有socket，先关闭
+    if (sock_fd_ != -1) {
+        close(sock_fd_);
+        sock_fd_ = -1;
+    }
+    
     sock_fd_ = socket(AF_INET, SOCK_STREAM, 0);
     if (sock_fd_ == -1) {
         std::cerr << "创建socket失败: " << strerror(errno) << std::endl;
+        return false;
+    }
+
+    // 设置socket选项
+    int opt = 1;
+    if (setsockopt(sock_fd_, SOL_SOCKET, SO_KEEPALIVE, &opt, sizeof(opt)) < 0) {
+        std::cerr << "设置socket选项失败: " << strerror(errno) << std::endl;
+        close(sock_fd_);
+        sock_fd_ = -1;
         return false;
     }
 
@@ -104,12 +128,14 @@ bool TcpClient::send(const std::string& data) {
     std::cout << "正在发送数据: " << data << std::endl;
     ssize_t sent = ::send(sock_fd_, data.c_str(), data.length(), 0);
     if (sent == -1) {
-        std::cerr << "发送数据失败: " << strerror(errno) << std::endl;
-        connected_ = false;
-        if (connection_callback_) {
-            connection_callback_(false);
+        if (errno != EINTR) {  // 忽略被信号中断的情况
+            std::cerr << "发送数据失败: " << strerror(errno) << std::endl;
+            connected_ = false;
+            if (connection_callback_) {
+                connection_callback_(false);
+            }
+            return false;
         }
-        return false;
     }
 
     std::cout << "数据发送成功" << std::endl;

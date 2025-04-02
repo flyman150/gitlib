@@ -9,7 +9,7 @@
 std::atomic<bool> g_running(true);
 
 // 客户端线程函数
-void clientThread(int client_id, const std::string& server_ip, int server_port) {
+void clientThread(const int client_id, const std::string& server_ip, const int server_port) {
     // 创建TCP客户端实例
     TcpClient client(server_ip, server_port);
     

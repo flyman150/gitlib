@@ -61,8 +61,7 @@ void TcpClient::stop() {
 }
 
 bool TcpClient::connect() {
-    // 如果已经有socket，先关闭
-    if (sock_fd_ != -1) {
+    if (sock_fd_ >= 0) {
         close(sock_fd_);
         sock_fd_ = -1;
     }

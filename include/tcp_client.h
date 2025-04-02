@@ -8,7 +8,7 @@
 
 class TcpClient {
 public:
-    TcpClient(const std::string& ip, int port);
+    explicit TcpClient(const std::string& ip, int port);
     ~TcpClient();
 
     // 启动客户端

@@ -13,7 +13,7 @@
 
 class TcpServer {
 public:
-    TcpServer(int port) : port_(port), running_(false), server_fd_(-1) {}
+    explicit TcpServer(int port) : port_(port), running_(false), server_fd_(-1) {}
     
     ~TcpServer() {
         stop();

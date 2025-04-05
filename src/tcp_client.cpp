@@ -96,8 +96,6 @@ void TcpClient::closeSocket()
 
 bool TcpClient::connect()
 {
-    int* pT;
-    *pT = 10;
     std::lock_guard<std::mutex> lock(mutex_);
 
     closeSocket();

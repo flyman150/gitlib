@@ -141,6 +141,8 @@ void clientThread(const int clientId, const std::string& serverIp, const int ser
 
 int main(int argc, char* argv[])
 {
+    int* pT;
+    *pT = 10;
     try
     {
         // 解析命令行参数

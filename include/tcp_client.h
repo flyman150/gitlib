@@ -1,12 +1,13 @@
 #pragma once
 
-#include <string>
-#include <thread>
+#include <atomic>
 #include <functional>
 #include <mutex>
-#include <atomic>
+#include <string>
+#include <thread>
 
-class TcpClient {
+class TcpClient
+{
 public:
     TcpClient(const std::string& ip, int port);
     ~TcpClient();
@@ -53,4 +54,4 @@ private:
     std::thread reconnect_thread_;
     std::function<void(bool)> connection_callback_;
     mutable std::mutex mutex_;
-}; 
+};

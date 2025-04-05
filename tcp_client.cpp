@@ -1,16 +1,23 @@
 #include "tcp_client.h"
-#include <sys/socket.h>
-#include <netinet/in.h>
+
 #include <arpa/inet.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
 #include <unistd.h>
+
+#include <chrono>
 #include <iostream>
 #include <thread>
-#include <chrono>
 
-TcpClient::TcpClient(const std::vector<std::string> &server_ips,
-                     const std::vector<int> &server_ports,
-                     int reconnect_interval)
-    : server_ips_(server_ips), server_ports_(server_ports), current_server_index_(0), reconnect_interval_(reconnect_interval), socket_fd_(-1), running_(false), connected_(false)
+TcpClient::TcpClient(const std::vector<std::string>& server_ips,
+                     const std::vector<int>& server_ports, int reconnect_interval)
+    : server_ips_(server_ips),
+      server_ports_(server_ports),
+      current_server_index_(0),
+      reconnect_interval_(reconnect_interval),
+      socket_fd_(-1),
+      running_(false),
+      connected_(false)
 {
     if (server_ips_.size() != server_ports_.size())
     {
@@ -44,7 +51,7 @@ void TcpClient::stop()
     disconnect();
 }
 
-bool TcpClient::sendMessage(const std::string &message)
+bool TcpClient::sendMessage(const std::string& message)
 {
     if (!connected_)
     {
@@ -105,7 +112,7 @@ bool TcpClient::connectToServer()
 
     // 尝试连接
     std::cout << "正在连接到服务器: " << ip << ":" << port << std::endl;
-    if (connect(socket_fd_, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
+    if (connect(socket_fd_, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0)
     {
         std::cout << "连接失败: " << ip << ":" << port << std::endl;
         close(socket_fd_);

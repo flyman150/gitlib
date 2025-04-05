@@ -1,0 +1,37 @@
+#!/bin/bash
+
+echo "执行 cppcheck 静态代码检查..."
+
+# 获取暂存区中的 C/C++ 文件
+files=$(git diff --cached --name-only --diff-filter=ACMR | grep -E "\.(cpp|h|hpp)$")
+
+if [ -z "$files" ]; then
+    echo "没有需要检查的 C/C++ 文件"
+    exit 0
+fi
+
+# 创建临时文件存储 cppcheck 输出
+tmpfile=$(mktemp)
+
+# 运行 cppcheck
+cppcheck --enable=all --error-exitcode=1 \
+         --suppress=missingInclude \
+         --suppress=unmatchedSuppression \
+         --inline-suppr \
+         --template="{file}:{line}: {severity}: {message}" \
+         $files 2> $tmpfile
+
+# 检查 cppcheck 的返回值
+if [ $? -ne 0 ]; then
+    echo "cppcheck 发现以下问题："
+    cat "$tmpfile"
+    rm "$tmpfile"
+    echo "提交被拒绝。请修复以上问题后重新提交。"
+    exit 1
+fi
+
+# 清理临时文件
+rm "$tmpfile"
+
+echo "✅ cppcheck 检查通过"
+exit 0 

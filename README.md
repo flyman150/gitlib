@@ -101,4 +101,36 @@ make
 - 确保服务器端已经启动并监听在指定端口
 - 默认连接本地服务器（127.0.0.1:8888），如需修改请更改main.cpp中的SERVER_IP和SERVER_PORT
 - 默认创建10个客户端，如需修改客户端数量，请更改main.cpp中的CLIENT_COUNT
-- 运行测试前请确保已安装Google Test框架 
+- 运行测试前请确保已安装Google Test框架
+
+# Git 钩子安装
+
+本项目包含了一个用于代码质量控制的 pre-commit 钩子，它会在每次提交前自动运行 cppcheck 进行静态代码分析。
+
+## 安装步骤
+
+1. 确保已安装 cppcheck：
+   ```bash
+   # Ubuntu/Debian
+   sudo apt-get install cppcheck
+   ```
+
+2. 运行安装脚本：
+   ```bash
+   ./hooks/install-hooks.sh
+   ```
+
+## 功能特性
+
+- 自动检查 C/C++ 代码中的常见问题
+- 包括内存泄漏、缓冲区溢出、未初始化变量等
+- 如果发现问题会阻止提交并显示详细错误信息
+
+## 跳过检查
+
+在特殊情况下，如果需要跳过检查，可以使用：
+```bash
+git commit --no-verify -m "提交信息"
+```
+
+注意：不建议经常跳过检查，这可能会降低代码质量。 

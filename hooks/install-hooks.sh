@@ -16,12 +16,17 @@ install_hooks() {
     
     # 获取脚本所在目录的绝对路径
     SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+    GIT_DIR="$( git rev-parse --git-dir )"
+    
+    # 创建 hooks 目录（如果不存在）
+    mkdir -p "${GIT_DIR}/hooks"
     
     # 创建符号链接到 .git/hooks 目录
-    ln -sf "$SCRIPT_DIR/pre-commit" "../.git/hooks/pre-commit"
+    ln -sf "$SCRIPT_DIR/pre-commit" "${GIT_DIR}/hooks/pre-commit"
     
     # 设置执行权限
     chmod +x "$SCRIPT_DIR/pre-commit"
+    chmod +x "${GIT_DIR}/hooks/pre-commit"
     
     echo "✅ Git 钩子安装完成"
 }

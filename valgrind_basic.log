@@ -1,235 +1,276 @@
-==3380== Memcheck, a memory error detector
-==3380== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3380== Using Valgrind-3.18.1-42b08ed5bd-20211015 and LibVEX; rerun with -h for copyright info
-==3380== Command: ./build/tcp_client_test
-==3380== Parent PID: 3379
-==3380== 
---3380-- 
---3380-- Valgrind options:
---3380--    --leak-check=full
---3380--    --show-leak-kinds=all
---3380--    --track-origins=yes
---3380--    --verbose
---3380--    --log-file=valgrind_basic.log
---3380-- Contents of /proc/version:
---3380--   Linux version 6.6.75.1-microsoft-standard-WSL2 (root@3d747d42b572) (gcc (GCC) 11.2.0, GNU ld (GNU Binutils) 2.37) #1 SMP PREEMPT_DYNAMIC Sat Feb  8 02:00:20 UTC 2025
---3380-- 
---3380-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand-rdseed
---3380-- Page sizes: currently 4096, max supported 4096
---3380-- Valgrind library directory: /usr/libexec/valgrind
---3380-- Reading syms from /home/wgb/github/gitlib/build/tcp_client_test
---3380-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
---3380--   Considering /usr/lib/debug/.build-id/e4/de036b19e4768e7591b596c4be9f9015f2d28a.debug ..
---3380--   .. build-id is valid
---3380-- Reading syms from /usr/libexec/valgrind/memcheck-amd64-linux
---3380--    object doesn't have a symbol table
---3380--    object doesn't have a dynamic symbol table
---3380-- Scheduler: using generic scheduler lock implementation.
---3380-- Reading suppressions file: /usr/libexec/valgrind/default.supp
-==3380== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-3380-by-wgb-on-???
-==3380== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-3380-by-wgb-on-???
-==3380== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-3380-by-wgb-on-???
-==3380== 
-==3380== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==3380== don't want to do, unless you know exactly what you're doing,
-==3380== or are doing some strange experiment):
-==3380==   /usr/bin/vgdb --pid=3380 ...command...
-==3380== 
-==3380== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==3380==   /path/to/gdb ./build/tcp_client_test
-==3380== and then give GDB the following command
-==3380==   target remote | /usr/bin/vgdb --pid=3380
-==3380== --pid is optional if only one valgrind process is running
-==3380== 
---3380-- REDIR: 0x402aa40 (ld-linux-x86-64.so.2:strlen) redirected to 0x580bcec2 (???)
---3380-- REDIR: 0x402a810 (ld-linux-x86-64.so.2:index) redirected to 0x580bcedc (???)
---3380-- Reading syms from /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
---3380--    object doesn't have a symbol table
---3380-- Reading syms from /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
---3380--    object doesn't have a symbol table
-==3380== WARNING: new redirection conflicts with existing -- ignoring it
---3380--     old: 0x0402aa40 (strlen              ) R-> (0000.0) 0x580bcec2 ???
---3380--     new: 0x0402aa40 (strlen              ) R-> (2007.0) 0x0484ee30 strlen
---3380-- REDIR: 0x4027220 (ld-linux-x86-64.so.2:strcmp) redirected to 0x484fcd0 (strcmp)
---3380-- REDIR: 0x402afa0 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4853840 (mempcpy)
---3380-- Reading syms from /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30
---3380--    object doesn't have a symbol table
---3380-- Reading syms from /usr/lib/x86_64-linux-gnu/libm.so.6
---3380--   Considering /usr/lib/debug/.build-id/7d/8778fca8ea4621b268cc03662855d0cd983439.debug ..
---3380--   .. build-id is valid
---3380-- Reading syms from /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
---3380--    object doesn't have a symbol table
---3380-- Reading syms from /usr/lib/x86_64-linux-gnu/libc.so.6
---3380--   Considering /usr/lib/debug/.build-id/cd/410b710f0f094c6832edd95931006d883af48e.debug ..
---3380--   .. build-id is valid
-==3380== WARNING: new redirection conflicts with existing -- ignoring it
---3380--     old: 0x04c39c60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
---3380--     new: 0x04c39c60 (memalign            ) R-> (1017.0) 0x0484e050 aligned_alloc
-==3380== WARNING: new redirection conflicts with existing -- ignoring it
---3380--     old: 0x04c39c60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
---3380--     new: 0x04c39c60 (memalign            ) R-> (1017.0) 0x0484e020 aligned_alloc
-==3380== WARNING: new redirection conflicts with existing -- ignoring it
---3380--     old: 0x04c39c60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
---3380--     new: 0x04c39c60 (memalign            ) R-> (1017.0) 0x0484e050 aligned_alloc
-==3380== WARNING: new redirection conflicts with existing -- ignoring it
---3380--     old: 0x04c39c60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
---3380--     new: 0x04c39c60 (memalign            ) R-> (1017.0) 0x0484e020 aligned_alloc
---3380-- REDIR: 0x4c3c720 (libc.so.6:strnlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3c9e0 (libc.so.6:strpbrk) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3c2e0 (libc.so.6:strcmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c5acd0 (libc.so.6:wcsnlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3d6d0 (libc.so.6:memset) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c59540 (libc.so.6:wcslen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3dc10 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c59370 (libc.so.6:wcschr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3c260 (libc.so.6:index) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3c960 (libc.so.6:rindex) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3d5a0 (libc.so.6:memmove) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
-==3380== Preferring higher priority redirection:
---3380--     old: 0x04d347c0 (__memcpy_avx_unalign) R-> (2018.0) 0x04850f90 __memcpy_avx_unaligned_erms
---3380--     new: 0x04d347c0 (__memcpy_avx_unalign) R-> (2018.1) 0x04852880 memmove
---3380-- REDIR: 0x4c593f0 (libc.so.6:wcscmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3d9e0 (libc.so.6:stpncpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c599b0 (libc.so.6:wmemchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3c830 (libc.so.6:strncmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3da70 (libc.so.6:strcasecmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3c420 (libc.so.6:strcspn) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c59470 (libc.so.6:wcscpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3c1d0 (libc.so.6:strcat) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3db60 (libc.so.6:strncasecmp_l) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3d480 (libc.so.6:bcmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c45570 (libc.so.6:memrchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3f010 (libc.so.6:strchrnul) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3c390 (libc.so.6:strcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3db10 (libc.so.6:strcasecmp_l) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3c6a0 (libc.so.6:strlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3c8d0 (libc.so.6:strncpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3d950 (libc.so.6:stpcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3d3f0 (libc.so.6:memchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3cb00 (libc.so.6:strspn) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3d7d0 (libc.so.6:mempcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3dac0 (libc.so.6:strncasecmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3ef80 (libc.so.6:rawmemchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4c3d310 (libc.so.6:strstr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
---3380-- REDIR: 0x4d31610 (libc.so.6:__strrchr_avx2) redirected to 0x484e810 (rindex)
---3380-- REDIR: 0x4c390a0 (libc.so.6:malloc) redirected to 0x4848820 (malloc)
---3380-- REDIR: 0x4d317e0 (libc.so.6:__strlen_avx2) redirected to 0x484ed10 (strlen)
---3380-- REDIR: 0x4d2da80 (libc.so.6:__memcmp_avx2_movbe) redirected to 0x4852010 (bcmp)
---3380-- REDIR: 0x490f970 (libstdc++.so.6:operator new(unsigned long)) redirected to 0x4848fa0 (operator new(unsigned long))
---3380-- REDIR: 0x4d347c0 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x4852880 (memmove)
---3380-- REDIR: 0x490dc20 (libstdc++.so.6:operator delete(void*, unsigned long)) redirected to 0x484bb00 (operator delete(void*, unsigned long))
---3380-- REDIR: 0x4d31180 (libc.so.6:__strchr_avx2) redirected to 0x484e9f0 (index)
---3380-- REDIR: 0x4d2c940 (libc.so.6:__strcmp_avx2) redirected to 0x484fbd0 (strcmp)
---3380-- REDIR: 0x4d2cd80 (libc.so.6:__strncmp_avx2) redirected to 0x484f3e0 (strncmp)
---3380-- REDIR: 0x490dc10 (libstdc++.so.6:operator delete(void*)) redirected to 0x484b840 (operator delete(void*))
---3380-- REDIR: 0x4d2e130 (libc.so.6:__strcasecmp_avx) redirected to 0x484f560 (strcasecmp)
---3380-- REDIR: 0x4d31400 (libc.so.6:__strchrnul_avx2) redirected to 0x4853330 (strchrnul)
---3380-- REDIR: 0x4d34780 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4853440 (mempcpy)
---3380-- REDIR: 0x4c3a520 (libc.so.6:calloc) redirected to 0x484d9d0 (calloc)
---3380-- REDIR: 0x4d339a0 (libc.so.6:__stpcpy_avx2) redirected to 0x4852130 (stpcpy)
---3380-- REDIR: 0x4c393e0 (libc.so.6:free) redirected to 0x484b210 (free)
-==3380== Warning: invalid file descriptor -1 in syscall close()
-==3380==    at 0x4CA8F8B: close (close.c:27)
-==3380==    by 0x116E16: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x11705D: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==3380==    by 0x4C28AC2: start_thread (pthread_create.c:442)
-==3380==    by 0x4CB9A03: clone (clone.S:100)
---3380-- REDIR: 0x4d34f80 (libc.so.6:__memset_avx2_unaligned_erms) redirected to 0x4852770 (memset)
-==3380== Warning: invalid file descriptor -1 in syscall close()
-==3380==    at 0x4CA8F8B: close (close.c:27)
-==3380==    by 0x116E16: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x117351: TcpClient::start() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x117F54: TcpClientTest_ConnectionCallback_Test::TestBody() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x14C96E: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x140855: testing::Test::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x1409D4: testing::TestInfo::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x140F88: testing::TestSuite::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x14168E: testing::internal::UnitTestImpl::RunAllTests() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x14CF36: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x140A9B: testing::UnitTest::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x115DB2: main (in /home/wgb/github/gitlib/build/tcp_client_test)
---3380-- REDIR: 0x4c58180 (libc.so.6:__strstr_sse2_unaligned) redirected to 0x4853a50 (strstr)
-==3380== Warning: invalid file descriptor -1 in syscall close()
-==3380==    at 0x4CA8F8B: close (close.c:27)
-==3380==    by 0x116E16: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x11705D: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==3380==    by 0x4C28AC2: start_thread (pthread_create.c:442)
-==3380==    by 0x4CB9A03: clone (clone.S:100)
-==3380== Warning: invalid file descriptor -1 in syscall close()
-==3380==    at 0x4CA8F8B: close (close.c:27)
-==3380==    by 0x116E16: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x11705D: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==3380==    by 0x4C28AC2: start_thread (pthread_create.c:442)
-==3380==    by 0x4CB9A03: clone (clone.S:100)
-==3380== Warning: invalid file descriptor -1 in syscall close()
-==3380==    at 0x4CA8F8B: close (close.c:27)
-==3380==    by 0x116E16: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x11705D: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==3380==    by 0x4C28AC2: start_thread (pthread_create.c:442)
-==3380==    by 0x4CB9A03: clone (clone.S:100)
-==3380== Warning: invalid file descriptor -1 in syscall close()
-==3380==    at 0x4CA8F8B: close (close.c:27)
-==3380==    by 0x116E16: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x11705D: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==3380==    by 0x4C28AC2: start_thread (pthread_create.c:442)
-==3380==    by 0x4CB9A03: clone (clone.S:100)
-==3380== Warning: invalid file descriptor -1 in syscall close()
-==3380==    at 0x4CA8F8B: close (close.c:27)
-==3380==    by 0x116E16: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x11705D: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==3380==    by 0x4C28AC2: start_thread (pthread_create.c:442)
-==3380==    by 0x4CB9A03: clone (clone.S:100)
-==3380== Warning: invalid file descriptor -1 in syscall close()
-==3380==    at 0x4CA8F8B: close (close.c:27)
-==3380==    by 0x116E16: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x11705D: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==3380==    by 0x4C28AC2: start_thread (pthread_create.c:442)
-==3380==    by 0x4CB9A03: clone (clone.S:100)
-==3380== Warning: invalid file descriptor -1 in syscall close()
-==3380==    at 0x4CA8F8B: close (close.c:27)
-==3380==    by 0x116E16: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x117351: TcpClient::start() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x118484: TcpClientTest_MultipleClients_Test::TestBody() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x14C96E: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x140855: testing::Test::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x1409D4: testing::TestInfo::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x140F88: testing::TestSuite::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x14168E: testing::internal::UnitTestImpl::RunAllTests() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x14CF36: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x140A9B: testing::UnitTest::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x115DB2: main (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380== Warning: invalid file descriptor -1 in syscall close()
-==3380==    at 0x4CA8F8B: close (close.c:27)
-==3380==    by 0x116E16: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x117351: TcpClient::start() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x117CFD: TcpClientTest_ClientStateManagement_Test::TestBody() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x14C96E: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x140855: testing::Test::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x1409D4: testing::TestInfo::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x140F88: testing::TestSuite::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x14168E: testing::internal::UnitTestImpl::RunAllTests() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x14CF36: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x140A9B: testing::UnitTest::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x115DB2: main (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380== Warning: invalid file descriptor -1 in syscall close()
-==3380==    at 0x4CA8F8B: close (close.c:27)
-==3380==    by 0x116E16: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x11705D: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
-==3380==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==3380==    by 0x4C28AC2: start_thread (pthread_create.c:442)
-==3380==    by 0x4CB9A03: clone (clone.S:100)
-==3380== 
-==3380== HEAP SUMMARY:
-==3380==     in use at exit: 0 bytes in 0 blocks
-==3380==   total heap usage: 292 allocs, 292 frees, 124,901 bytes allocated
-==3380== 
-==3380== All heap blocks were freed -- no leaks are possible
-==3380== 
-==3380== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==3295== Memcheck, a memory error detector
+==3295== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3295== Using Valgrind-3.18.1-42b08ed5bd-20211015 and LibVEX; rerun with -h for copyright info
+==3295== Command: ./build/tcp_client_test
+==3295== Parent PID: 3294
+==3295== 
+--3295-- 
+--3295-- Valgrind options:
+--3295--    --leak-check=full
+--3295--    --show-leak-kinds=all
+--3295--    --track-origins=yes
+--3295--    --verbose
+--3295--    --log-file=valgrind_basic.log
+--3295-- Contents of /proc/version:
+--3295--   Linux version 6.6.75.1-microsoft-standard-WSL2 (root@3d747d42b572) (gcc (GCC) 11.2.0, GNU ld (GNU Binutils) 2.37) #1 SMP PREEMPT_DYNAMIC Sat Feb  8 02:00:20 UTC 2025
+--3295-- 
+--3295-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand-rdseed
+--3295-- Page sizes: currently 4096, max supported 4096
+--3295-- Valgrind library directory: /usr/libexec/valgrind
+--3295-- Reading syms from /home/wgb/github/gitlib/build/tcp_client_test
+--3295-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+--3295--   Considering /usr/lib/debug/.build-id/e4/de036b19e4768e7591b596c4be9f9015f2d28a.debug ..
+--3295--   .. build-id is valid
+--3295-- Reading syms from /usr/libexec/valgrind/memcheck-amd64-linux
+--3295--    object doesn't have a symbol table
+--3295--    object doesn't have a dynamic symbol table
+--3295-- Scheduler: using generic scheduler lock implementation.
+--3295-- Reading suppressions file: /usr/libexec/valgrind/default.supp
+==3295== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-3295-by-wgb-on-???
+==3295== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-3295-by-wgb-on-???
+==3295== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-3295-by-wgb-on-???
+==3295== 
+==3295== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==3295== don't want to do, unless you know exactly what you're doing,
+==3295== or are doing some strange experiment):
+==3295==   /usr/bin/vgdb --pid=3295 ...command...
+==3295== 
+==3295== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==3295==   /path/to/gdb ./build/tcp_client_test
+==3295== and then give GDB the following command
+==3295==   target remote | /usr/bin/vgdb --pid=3295
+==3295== --pid is optional if only one valgrind process is running
+==3295== 
+--3295-- REDIR: 0x402aa40 (ld-linux-x86-64.so.2:strlen) redirected to 0x580bcec2 (???)
+--3295-- REDIR: 0x402a810 (ld-linux-x86-64.so.2:index) redirected to 0x580bcedc (???)
+--3295-- Reading syms from /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
+--3295--    object doesn't have a symbol table
+--3295-- Reading syms from /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
+--3295--    object doesn't have a symbol table
+==3295== WARNING: new redirection conflicts with existing -- ignoring it
+--3295--     old: 0x0402aa40 (strlen              ) R-> (0000.0) 0x580bcec2 ???
+--3295--     new: 0x0402aa40 (strlen              ) R-> (2007.0) 0x0484ee30 strlen
+--3295-- REDIR: 0x4027220 (ld-linux-x86-64.so.2:strcmp) redirected to 0x484fcd0 (strcmp)
+--3295-- REDIR: 0x402afa0 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4853840 (mempcpy)
+--3295-- Reading syms from /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30
+--3295--    object doesn't have a symbol table
+--3295-- Reading syms from /usr/lib/x86_64-linux-gnu/libm.so.6
+--3295--   Considering /usr/lib/debug/.build-id/7d/8778fca8ea4621b268cc03662855d0cd983439.debug ..
+--3295--   .. build-id is valid
+--3295-- Reading syms from /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+--3295--    object doesn't have a symbol table
+--3295-- Reading syms from /usr/lib/x86_64-linux-gnu/libc.so.6
+--3295--   Considering /usr/lib/debug/.build-id/cd/410b710f0f094c6832edd95931006d883af48e.debug ..
+--3295--   .. build-id is valid
+==3295== WARNING: new redirection conflicts with existing -- ignoring it
+--3295--     old: 0x04c39c60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--3295--     new: 0x04c39c60 (memalign            ) R-> (1017.0) 0x0484e050 aligned_alloc
+==3295== WARNING: new redirection conflicts with existing -- ignoring it
+--3295--     old: 0x04c39c60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--3295--     new: 0x04c39c60 (memalign            ) R-> (1017.0) 0x0484e020 aligned_alloc
+==3295== WARNING: new redirection conflicts with existing -- ignoring it
+--3295--     old: 0x04c39c60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--3295--     new: 0x04c39c60 (memalign            ) R-> (1017.0) 0x0484e050 aligned_alloc
+==3295== WARNING: new redirection conflicts with existing -- ignoring it
+--3295--     old: 0x04c39c60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--3295--     new: 0x04c39c60 (memalign            ) R-> (1017.0) 0x0484e020 aligned_alloc
+--3295-- REDIR: 0x4c3c720 (libc.so.6:strnlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3c9e0 (libc.so.6:strpbrk) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3c2e0 (libc.so.6:strcmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c5acd0 (libc.so.6:wcsnlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3d6d0 (libc.so.6:memset) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c59540 (libc.so.6:wcslen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3dc10 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c59370 (libc.so.6:wcschr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3c260 (libc.so.6:index) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3c960 (libc.so.6:rindex) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3d5a0 (libc.so.6:memmove) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+==3295== Preferring higher priority redirection:
+--3295--     old: 0x04d347c0 (__memcpy_avx_unalign) R-> (2018.0) 0x04850f90 __memcpy_avx_unaligned_erms
+--3295--     new: 0x04d347c0 (__memcpy_avx_unalign) R-> (2018.1) 0x04852880 memmove
+--3295-- REDIR: 0x4c593f0 (libc.so.6:wcscmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3d9e0 (libc.so.6:stpncpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c599b0 (libc.so.6:wmemchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3c830 (libc.so.6:strncmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3da70 (libc.so.6:strcasecmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3c420 (libc.so.6:strcspn) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c59470 (libc.so.6:wcscpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3c1d0 (libc.so.6:strcat) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3db60 (libc.so.6:strncasecmp_l) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3d480 (libc.so.6:bcmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c45570 (libc.so.6:memrchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3f010 (libc.so.6:strchrnul) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3c390 (libc.so.6:strcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3db10 (libc.so.6:strcasecmp_l) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3c6a0 (libc.so.6:strlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3c8d0 (libc.so.6:strncpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3d950 (libc.so.6:stpcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3d3f0 (libc.so.6:memchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3cb00 (libc.so.6:strspn) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3d7d0 (libc.so.6:mempcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3dac0 (libc.so.6:strncasecmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3ef80 (libc.so.6:rawmemchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4c3d310 (libc.so.6:strstr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--3295-- REDIR: 0x4d31610 (libc.so.6:__strrchr_avx2) redirected to 0x484e810 (rindex)
+--3295-- REDIR: 0x4c390a0 (libc.so.6:malloc) redirected to 0x4848820 (malloc)
+--3295-- REDIR: 0x4d317e0 (libc.so.6:__strlen_avx2) redirected to 0x484ed10 (strlen)
+--3295-- REDIR: 0x4d2da80 (libc.so.6:__memcmp_avx2_movbe) redirected to 0x4852010 (bcmp)
+--3295-- REDIR: 0x490f970 (libstdc++.so.6:operator new(unsigned long)) redirected to 0x4848fa0 (operator new(unsigned long))
+--3295-- REDIR: 0x4d347c0 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x4852880 (memmove)
+--3295-- REDIR: 0x490dc20 (libstdc++.so.6:operator delete(void*, unsigned long)) redirected to 0x484bb00 (operator delete(void*, unsigned long))
+--3295-- REDIR: 0x4d31180 (libc.so.6:__strchr_avx2) redirected to 0x484e9f0 (index)
+--3295-- REDIR: 0x490dc10 (libstdc++.so.6:operator delete(void*)) redirected to 0x484b840 (operator delete(void*))
+--3295-- REDIR: 0x4d2c940 (libc.so.6:__strcmp_avx2) redirected to 0x484fbd0 (strcmp)
+--3295-- REDIR: 0x4d2cd80 (libc.so.6:__strncmp_avx2) redirected to 0x484f3e0 (strncmp)
+--3295-- REDIR: 0x4d2e130 (libc.so.6:__strcasecmp_avx) redirected to 0x484f560 (strcasecmp)
+--3295-- REDIR: 0x4d31400 (libc.so.6:__strchrnul_avx2) redirected to 0x4853330 (strchrnul)
+--3295-- REDIR: 0x4d34780 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4853440 (mempcpy)
+--3295-- REDIR: 0x4c3a520 (libc.so.6:calloc) redirected to 0x484d9d0 (calloc)
+--3295-- REDIR: 0x4d339a0 (libc.so.6:__stpcpy_avx2) redirected to 0x4852130 (stpcpy)
+--3295-- REDIR: 0x4c393e0 (libc.so.6:free) redirected to 0x484b210 (free)
+==3295== Warning: invalid file descriptor -1 in syscall close()
+==3295==    at 0x4CA8F8B: close (close.c:27)
+==3295==    by 0x116AF5: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x116BC7: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1183AF: void std::__invoke_impl<void, void (TcpClient::*)(), TcpClient*>(std::__invoke_memfun_deref, void (TcpClient::*&&)(), TcpClient*&&) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118302: std::__invoke_result<void (TcpClient::*)(), TcpClient*>::type std::__invoke<void (TcpClient::*)(), TcpClient*>(void (TcpClient::*&&)(), TcpClient*&&) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118262: void std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118217: std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> >::operator()() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1181F7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> > >::_M_run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3295==    by 0x4C28AC2: start_thread (pthread_create.c:442)
+==3295==    by 0x4CB9A03: clone (clone.S:100)
+--3295-- REDIR: 0x4d34f80 (libc.so.6:__memset_avx2_unaligned_erms) redirected to 0x4852770 (memset)
+==3295== Warning: invalid file descriptor -1 in syscall close()
+==3295==    at 0x4CA8F8B: close (close.c:27)
+==3295==    by 0x116AF5: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x116763: TcpClient::start() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118BE0: TcpClientTest_ConnectionCallback_Test::TestBody() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1509BE: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x144B75: testing::Test::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x144CF4: testing::TestInfo::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1452A8: testing::TestSuite::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1459AE: testing::internal::UnitTestImpl::RunAllTests() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x150F86: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x144DBB: testing::UnitTest::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x11B67B: RUN_ALL_TESTS() (in /home/wgb/github/gitlib/build/tcp_client_test)
+--3295-- REDIR: 0x4c58180 (libc.so.6:__strstr_sse2_unaligned) redirected to 0x4853a50 (strstr)
+==3295== Warning: invalid file descriptor -1 in syscall close()
+==3295==    at 0x4CA8F8B: close (close.c:27)
+==3295==    by 0x116AF5: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x116BC7: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1183AF: void std::__invoke_impl<void, void (TcpClient::*)(), TcpClient*>(std::__invoke_memfun_deref, void (TcpClient::*&&)(), TcpClient*&&) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118302: std::__invoke_result<void (TcpClient::*)(), TcpClient*>::type std::__invoke<void (TcpClient::*)(), TcpClient*>(void (TcpClient::*&&)(), TcpClient*&&) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118262: void std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118217: std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> >::operator()() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1181F7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> > >::_M_run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3295==    by 0x4C28AC2: start_thread (pthread_create.c:442)
+==3295==    by 0x4CB9A03: clone (clone.S:100)
+==3295== Warning: invalid file descriptor -1 in syscall close()
+==3295==    at 0x4CA8F8B: close (close.c:27)
+==3295==    by 0x116AF5: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x116BC7: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1183AF: void std::__invoke_impl<void, void (TcpClient::*)(), TcpClient*>(std::__invoke_memfun_deref, void (TcpClient::*&&)(), TcpClient*&&) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118302: std::__invoke_result<void (TcpClient::*)(), TcpClient*>::type std::__invoke<void (TcpClient::*)(), TcpClient*>(void (TcpClient::*&&)(), TcpClient*&&) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118262: void std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118217: std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> >::operator()() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1181F7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> > >::_M_run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3295==    by 0x4C28AC2: start_thread (pthread_create.c:442)
+==3295==    by 0x4CB9A03: clone (clone.S:100)
+==3295== Warning: invalid file descriptor -1 in syscall close()
+==3295==    at 0x4CA8F8B: close (close.c:27)
+==3295==    by 0x116AF5: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x116763: TcpClient::start() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1196A9: TcpClientTest_MultipleClients_Test::TestBody() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1509BE: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x144B75: testing::Test::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x144CF4: testing::TestInfo::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1452A8: testing::TestSuite::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1459AE: testing::internal::UnitTestImpl::RunAllTests() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x150F86: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x144DBB: testing::UnitTest::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x11B67B: RUN_ALL_TESTS() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295== Warning: invalid file descriptor -1 in syscall close()
+==3295==    at 0x4CA8F8B: close (close.c:27)
+==3295==    by 0x116AF5: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x116763: TcpClient::start() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1196A9: TcpClientTest_MultipleClients_Test::TestBody() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1509BE: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x144B75: testing::Test::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x144CF4: testing::TestInfo::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1452A8: testing::TestSuite::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1459AE: testing::internal::UnitTestImpl::RunAllTests() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x150F86: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x144DBB: testing::UnitTest::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x11B67B: RUN_ALL_TESTS() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295== Warning: invalid file descriptor -1 in syscall close()
+==3295==    at 0x4CA8F8B: close (close.c:27)
+==3295==    by 0x116AF5: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x116BC7: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1183AF: void std::__invoke_impl<void, void (TcpClient::*)(), TcpClient*>(std::__invoke_memfun_deref, void (TcpClient::*&&)(), TcpClient*&&) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118302: std::__invoke_result<void (TcpClient::*)(), TcpClient*>::type std::__invoke<void (TcpClient::*)(), TcpClient*>(void (TcpClient::*&&)(), TcpClient*&&) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118262: void std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118217: std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> >::operator()() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1181F7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> > >::_M_run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3295==    by 0x4C28AC2: start_thread (pthread_create.c:442)
+==3295==    by 0x4CB9A03: clone (clone.S:100)
+==3295== Warning: invalid file descriptor -1 in syscall close()
+==3295==    at 0x4CA8F8B: close (close.c:27)
+==3295==    by 0x116AF5: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x116BC7: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1183AF: void std::__invoke_impl<void, void (TcpClient::*)(), TcpClient*>(std::__invoke_memfun_deref, void (TcpClient::*&&)(), TcpClient*&&) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118302: std::__invoke_result<void (TcpClient::*)(), TcpClient*>::type std::__invoke<void (TcpClient::*)(), TcpClient*>(void (TcpClient::*&&)(), TcpClient*&&) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118262: void std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118217: std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> >::operator()() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1181F7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> > >::_M_run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3295==    by 0x4C28AC2: start_thread (pthread_create.c:442)
+==3295==    by 0x4CB9A03: clone (clone.S:100)
+==3295== Warning: invalid file descriptor -1 in syscall close()
+==3295==    at 0x4CA8F8B: close (close.c:27)
+==3295==    by 0x116AF5: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x116BC7: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1183AF: void std::__invoke_impl<void, void (TcpClient::*)(), TcpClient*>(std::__invoke_memfun_deref, void (TcpClient::*&&)(), TcpClient*&&) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118302: std::__invoke_result<void (TcpClient::*)(), TcpClient*>::type std::__invoke<void (TcpClient::*)(), TcpClient*>(void (TcpClient::*&&)(), TcpClient*&&) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118262: void std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118217: std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> >::operator()() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1181F7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> > >::_M_run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3295==    by 0x4C28AC2: start_thread (pthread_create.c:442)
+==3295==    by 0x4CB9A03: clone (clone.S:100)
+==3295== Warning: invalid file descriptor -1 in syscall close()
+==3295==    at 0x4CA8F8B: close (close.c:27)
+==3295==    by 0x116AF5: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x116763: TcpClient::start() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x119939: TcpClientTest_ClientStateManagement_Test::TestBody() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1509BE: void testing::internal::HandleExceptionsInMethodIfSupported<testing::Test, void>(testing::Test*, void (testing::Test::*)(), char const*) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x144B75: testing::Test::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x144CF4: testing::TestInfo::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1452A8: testing::TestSuite::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1459AE: testing::internal::UnitTestImpl::RunAllTests() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x150F86: bool testing::internal::HandleExceptionsInMethodIfSupported<testing::internal::UnitTestImpl, bool>(testing::internal::UnitTestImpl*, bool (testing::internal::UnitTestImpl::*)(), char const*) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x144DBB: testing::UnitTest::Run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x11B67B: RUN_ALL_TESTS() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295== Warning: invalid file descriptor -1 in syscall close()
+==3295==    at 0x4CA8F8B: close (close.c:27)
+==3295==    by 0x116AF5: TcpClient::connect() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x116BC7: TcpClient::reconnectThread() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1183AF: void std::__invoke_impl<void, void (TcpClient::*)(), TcpClient*>(std::__invoke_memfun_deref, void (TcpClient::*&&)(), TcpClient*&&) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118302: std::__invoke_result<void (TcpClient::*)(), TcpClient*>::type std::__invoke<void (TcpClient::*)(), TcpClient*>(void (TcpClient::*&&)(), TcpClient*&&) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118262: void std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> >::_M_invoke<0ul, 1ul>(std::_Index_tuple<0ul, 1ul>) (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x118217: std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> >::operator()() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x1181F7: std::thread::_State_impl<std::thread::_Invoker<std::tuple<void (TcpClient::*)(), TcpClient*> > >::_M_run() (in /home/wgb/github/gitlib/build/tcp_client_test)
+==3295==    by 0x493D252: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3295==    by 0x4C28AC2: start_thread (pthread_create.c:442)
+==3295==    by 0x4CB9A03: clone (clone.S:100)
+==3295== 
+==3295== HEAP SUMMARY:
+==3295==     in use at exit: 0 bytes in 0 blocks
+==3295==   total heap usage: 292 allocs, 292 frees, 124,901 bytes allocated
+==3295== 
+==3295== All heap blocks were freed -- no leaks are possible
+==3295== 
+==3295== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

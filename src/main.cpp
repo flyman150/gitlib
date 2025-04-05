@@ -76,68 +76,80 @@ void clientThread(const int clientId,
                  const std::string& serverIp, 
                  const int serverPort,
                  const int messageInterval) {
-    // 创建TCP客户端实例
-    TcpClient client(serverIp, serverPort);
-    
-    // 设置连接状态回调
-    client.setConnectionCallback([clientId](bool connected) {
-        std::cout << "客户端 " << clientId << " 连接状态: " 
-                  << (connected ? "已连接" : "已断开") << std::endl;
-    });
-    
-    // 启动客户端
-    client.start();
-    
-    // 主循环
-    while (gRunning) {
-        std::string message = "客户端 " + std::to_string(clientId) + " 发送的消息";
-        if (client.send(message)) {
-            std::cout << "客户端 " << clientId << " 消息发送成功" << std::endl;
-        } else {
-            std::cout << "客户端 " << clientId << " 消息发送失败" << std::endl;
+    try {
+        // 创建TCP客户端实例
+        auto client = std::make_unique<TcpClient>(serverIp, serverPort);
+        
+        // 设置连接状态回调
+        client->setConnectionCallback([clientId](bool connected) {
+            std::cout << "客户端 " << clientId << " 连接状态: " 
+                      << (connected ? "已连接" : "已断开") << std::endl;
+        });
+        
+        // 启动客户端
+        client->start();
+        
+        // 主循环
+        while (gRunning) {
+            if (client->isConnected()) {
+                std::string message = "客户端 " + std::to_string(clientId) + " 发送的消息";
+                if (client->send(message)) {
+                    std::cout << "客户端 " << clientId << " 消息发送成功" << std::endl;
+                } else {
+                    std::cout << "客户端 " << clientId << " 消息发送失败" << std::endl;
+                }
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(messageInterval));
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(messageInterval));
+        
+        // 停止客户端
+        client->stop();
+    } catch (const std::exception& e) {
+        std::cerr << "客户端 " << clientId << " 发生异常: " << e.what() << std::endl;
     }
-    
-    // 停止客户端
-    client.stop();
 }
 
 int main(int argc, char* argv[]) {
-    // 解析命令行参数
-    ClientConfig config = parseArguments(argc, argv);
-    
-    std::cout << "启动配置:\n"
-              << "服务器IP: " << config.serverIp << "\n"
-              << "服务器端口: " << config.serverPort << "\n"
-              << "客户端数量: " << config.clientCount << "\n"
-              << "消息发送间隔: " << config.messageInterval << "ms\n"
-              << std::endl;
-    
-    std::vector<std::thread> clientThreads;
-    
-    // 创建并启动所有客户端线程
-    for (int i = 0; i < config.clientCount; ++i) {
-        clientThreads.emplace_back(clientThread, i, 
-                                  config.serverIp, 
-                                  config.serverPort,
-                                  config.messageInterval);
-    }
-    
-    // 等待用户输入来停止所有客户端
-    std::cout << "按回车键停止所有客户端..." << std::endl;
-    std::cin.get();
-    
-    // 设置停止标志
-    gRunning = false;
-    
-    // 等待所有客户端线程结束
-    for (auto& thread : clientThreads) {
-        if (thread.joinable()) {
-            thread.join();
+    try {
+        // 解析命令行参数
+        ClientConfig config = parseArguments(argc, argv);
+        
+        std::cout << "启动配置:\n"
+                  << "服务器IP: " << config.serverIp << "\n"
+                  << "服务器端口: " << config.serverPort << "\n"
+                  << "客户端数量: " << config.clientCount << "\n"
+                  << "消息发送间隔: " << config.messageInterval << "ms\n"
+                  << std::endl;
+        
+        std::vector<std::thread> clientThreads;
+        clientThreads.reserve(config.clientCount);  // 预分配空间
+        
+        // 创建并启动所有客户端线程
+        for (int i = 0; i < config.clientCount; ++i) {
+            clientThreads.emplace_back(clientThread, i, 
+                                      config.serverIp, 
+                                      config.serverPort,
+                                      config.messageInterval);
         }
+        
+        // 等待用户输入来停止所有客户端
+        std::cout << "按回车键停止所有客户端..." << std::endl;
+        std::cin.get();
+        
+        // 设置停止标志
+        gRunning = false;
+        
+        // 等待所有客户端线程结束
+        for (auto& thread : clientThreads) {
+            if (thread.joinable()) {
+                thread.join();
+            }
+        }
+        
+        std::cout << "所有客户端已停止" << std::endl;
+        return 0;
+    } catch (const std::exception& e) {
+        std::cerr << "程序发生异常: " << e.what() << std::endl;
+        return 1;
     }
-    
-    std::cout << "所有客户端已停止" << std::endl;
-    return 0;
 } 

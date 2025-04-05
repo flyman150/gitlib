@@ -15,7 +15,11 @@ command -v valgrind >/dev/null 2>&1 || {
 # 确保项目已经构建
 if [ ! -f "build/tcp_client_test" ]; then
     echo "未找到测试程序，先运行 build.sh"
-    ./build.sh
+    mkdir -p build
+    cd build
+    cmake ..
+    make
+    cd ..
 fi
 
 # Valgrind测试函数
@@ -53,6 +57,27 @@ for i in {1..5}; do
     fi
 done
 echo "✅ 压力测试通过"
+
+# 运行客户端测试
+echo "运行客户端内存泄漏测试..."
+valgrind --leak-check=full \
+         --show-leak-kinds=all \
+         --track-origins=yes \
+         --verbose \
+         --log-file="valgrind_client.log" \
+         ./build/tcp_client -s 127.0.0.1 -p 8888 -c 2 -i 1000 &
+
+# 等待5秒后终止客户端
+sleep 5
+killall tcp_client
+
+# 检查客户端测试结果
+if grep -q "definitely lost: 0 bytes" "valgrind_client.log" && \
+   grep -q "indirectly lost: 0 bytes" "valgrind_client.log"; then
+    echo "✅ 客户端测试未检测到内存泄漏"
+else
+    echo "❌ 客户端测试检测到内存泄漏，详见 valgrind_client.log"
+fi
 
 # 清理测试文件
 echo "清理测试文件..."

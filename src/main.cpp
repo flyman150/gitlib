@@ -31,7 +31,6 @@ struct ClientConfig
 ClientConfig parseArguments(int argc, char* argv[])
 {
     ClientConfig config;
-
     for (int i = 1; i < argc; i++)
     {
         std::string arg = argv[i];

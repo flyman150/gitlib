@@ -96,6 +96,11 @@ void TcpClient::closeSocket()
 
 bool TcpClient::connect()
 {
+    return connect(-1);
+}
+
+bool TcpClient::connect(int port)
+{
     std::lock_guard<std::mutex> lock(mutex_);
 
     closeSocket();
@@ -123,7 +128,7 @@ bool TcpClient::connect()
 
     struct sockaddr_in server_addr;
     server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(server_port_);
+    server_addr.sin_port = htons(port == -1 ? server_port_ : port);
     server_addr.sin_addr.s_addr = inet_addr(server_ip_.c_str());
 
     // 非阻塞连接
@@ -233,6 +238,44 @@ bool TcpClient::send(const std::string& data)
 
     std::cout << "数据发送成功" << std::endl;
     return true;
+}
+
+bool TcpClient::send(const std::string& data, int port)
+{
+    if (port == server_port_ && connected_)
+    {
+        return send(data); // 如果端口相同且已连接，使用现有连接
+    }
+
+    // 创建新的临时连接
+    std::lock_guard<std::mutex> lock(mutex_);
+    int old_sock_fd = sock_fd_;
+    bool old_connected = connected_;
+    
+    // 临时更改连接状态
+    sock_fd_ = -1;
+    connected_ = false;
+
+    // 尝试连接新端口
+    if (!connect(port))
+    {
+        // 恢复原始连接状态
+        sock_fd_ = old_sock_fd;
+        connected_ = old_connected;
+        return false;
+    }
+
+    // 发送数据
+    bool result = send(data);
+
+    // 关闭临时连接
+    close(sock_fd_);
+    
+    // 恢复原始连接状态
+    sock_fd_ = old_sock_fd;
+    connected_ = old_connected;
+
+    return result;
 }
 
 void TcpClient::setConnectionCallback(std::function<void(bool)> callback)

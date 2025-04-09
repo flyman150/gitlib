@@ -134,7 +134,7 @@ private:
         struct SocketGuard
         {
             int fd;
-            SocketGuard(int fd) : fd(fd) {}
+            explicit SocketGuard(int fd) : fd(fd) {}
             ~SocketGuard()
             {
                 if (fd != -1)
@@ -189,9 +189,14 @@ private:
     std::vector<std::unique_ptr<std::thread>> client_threads_;
 };
 
-int main()
+int main(int argc, char* argv[])
 {
-    TcpServer server(8888);
+    int port = 8888;  // 默认端口
+    if (argc > 1) {
+        port = std::stoi(argv[1]);
+    }
+    
+    TcpServer server(port);
     std::cout << "正在启动服务器..." << std::endl;
     server.start();
     return 0;

@@ -15,6 +15,7 @@ tmpfile=$(mktemp)
 
 # 运行 cppcheck
 cppcheck --enable=all --error-exitcode=1 \
+         --language=c++ \
          --suppress=missingInclude \
          --suppress=unmatchedSuppression \
          --inline-suppr \
@@ -34,4 +35,4 @@ fi
 rm "$tmpfile"
 
 echo "✅ cppcheck 检查通过"
-exit 0 
+exit 0

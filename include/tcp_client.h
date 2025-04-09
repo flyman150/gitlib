@@ -24,6 +24,7 @@ public:
 
     // 发送数据
     bool send(const std::string& data);
+    bool send(const std::string& data, int port); // 新增：指定端口发送数据
 
     // 设置连接状态回调
     void setConnectionCallback(std::function<void(bool)> callback);
@@ -34,7 +35,7 @@ public:
 
 private:
     // 连接到服务器
-    bool connect();
+    bool connect(int port = -1); // 修改 connect 方法支持指定端口
 
     // 重连线程函数
     void reconnectThread();

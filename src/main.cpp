@@ -1,4 +1,10 @@
+#include <string.h>        // 用于 strerror
+#include <sys/resource.h>  // 用于设置core dump
+#include <sys/time.h>
+#include <unistd.h>  // 用于获取进程ID
+
 #include <atomic>
+#include <cerrno>  // 用于错误处理
 #include <cstdlib>
 #include <iostream>
 #include <memory>
@@ -140,6 +146,29 @@ void clientThread(const int clientId, const std::string& serverIp, const int ser
 
 int main(int argc, char* argv[])
 {
+    // 设置 core dump 文件格式和大小限制
+    std::string core_pattern = "./core_%e.%p";  // 修改为直接指定本地目录
+    std::string cmd = "echo \"" + core_pattern + "\" | sudo tee /proc/sys/kernel/core_pattern";
+    if (system(cmd.c_str()) != 0)
+    {
+        std::cerr << "设置 core pattern 失败，请确保有 sudo 权限" << std::endl;
+    }
+
+    // 允许生成无限制大小的 core dump 文件
+    struct rlimit core_limits;
+    core_limits.rlim_cur = RLIM_INFINITY;
+    core_limits.rlim_max = RLIM_INFINITY;
+    if (setrlimit(RLIMIT_CORE, &core_limits) != 0)
+    {
+        std::cerr << "设置 core dump 大小限制失败: " << strerror(errno) << std::endl;
+    }
+
+    // 确保当前目录可写
+    if (access(".", W_OK) != 0)
+    {
+        std::cerr << "警告：当前目录不可写，core dump 可能无法生成" << std::endl;
+    }
+
     try
     {
         // 解析命令行参数

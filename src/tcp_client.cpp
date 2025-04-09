@@ -52,7 +52,7 @@ void TcpClient::start()
     reconnect_thread_ = std::thread(&TcpClient::reconnectThread, this);
 
     // 尝试首次连接
-    if (connect())
+    if (connect(server_port_))
     {
         connected_ = true;
         notifyConnectionChange(true);
@@ -92,11 +92,6 @@ void TcpClient::closeSocket()
         close(sock_fd_);
         sock_fd_ = -1;
     }
-}
-
-bool TcpClient::connect()
-{
-    return connect(-1);
 }
 
 bool TcpClient::connect(int port)
@@ -177,7 +172,7 @@ void TcpClient::reconnectThread()
         if (!isConnected())
         {
             std::cout << "尝试重新连接服务器..." << std::endl;
-            if (connect())
+            if (connect(server_port_))
             {
                 {
                     std::lock_guard<std::mutex> lock(mutex_);

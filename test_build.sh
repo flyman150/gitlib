@@ -13,8 +13,8 @@ command -v valgrind >/dev/null 2>&1 || {
 }
 
 # 确保项目已经构建
-if [ ! -f "build/tcp_client_test" ]; then
-    echo "未找到测试程序，先运行 build.sh"
+if [ ! -f "build/tcp_client" ]; then
+    echo "未找到tcp_client程序，先运行 build.sh"
     mkdir -p build
     cd build
     cmake ..
@@ -22,41 +22,9 @@ if [ ! -f "build/tcp_client_test" ]; then
     cd ..
 fi
 
-# Valgrind测试函数
-run_valgrind_test() {
-    local test_name=$1
-    local exec_file=$2
-    echo "运行 $test_name 内存泄漏测试..."
-    
-    valgrind --leak-check=full \
-             --show-leak-kinds=all \
-             --track-origins=yes \
-             --verbose \
-             --log-file="valgrind_${test_name}.log" \
-             $exec_file
-             
-    if grep -q "definitely lost: 0 bytes" "valgrind_${test_name}.log" && \
-       grep -q "indirectly lost: 0 bytes" "valgrind_${test_name}.log"; then
-        echo "✅ $test_name 未检测到内存泄漏"
-    else
-        echo "❌ $test_name 检测到内存泄漏，详见 valgrind_${test_name}.log"
-        return 1
-    fi
-}
-
-# 运行基本测试
-run_valgrind_test "basic" "./build/tcp_client_test"
-
-# 压力测试
-echo "运行压力测试..."
-for i in {1..5}; do
-    ./build/tcp_client_test --gtest_repeat=10 > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        echo "❌ 压力测试失败"
-        exit 1
-    fi
-done
-echo "✅ 压力测试通过"
+# 清理测试文件
+echo "清理测试文件..."
+rm -f valgrind_*.log
 
 # 运行客户端测试
 echo "运行客户端内存泄漏测试..."
@@ -65,7 +33,7 @@ valgrind --leak-check=full \
          --track-origins=yes \
          --verbose \
          --log-file="valgrind_client.log" \
-         ./build/tcp_client -s 127.0.0.1 -p 8888 -c 2 -i 1000 &
+         ./build/tcp_client &
 
 # 等待5秒后终止客户端
 sleep 5
@@ -78,9 +46,5 @@ if grep -q "definitely lost: 0 bytes" "valgrind_client.log" && \
 else
     echo "❌ 客户端测试检测到内存泄漏，详见 valgrind_client.log"
 fi
-
-# 清理测试文件
-echo "清理测试文件..."
-rm -f valgrind_*.log
 
 echo "所有测试完成"

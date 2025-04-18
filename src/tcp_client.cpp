@@ -48,7 +48,7 @@ void TcpClient::start()
     running_ = true;
     connected_ = false;
 
-    // 创建重连线程
+    // 创建重连线程，使用join方式管理
     reconnect_thread_ = std::thread(&TcpClient::reconnectThread, this);
 
     // 尝试首次连接
@@ -239,38 +239,53 @@ bool TcpClient::send(const std::string& data, int port)
 {
     if (port == server_port_ && connected_)
     {
-        return send(data); // 如果端口相同且已连接，使用现有连接
+        return send(data);  // 如果端口相同且已连接，使用现有连接
     }
 
     // 创建新的临时连接
     std::lock_guard<std::mutex> lock(mutex_);
-    int old_sock_fd = sock_fd_;
-    bool old_connected = connected_;
-    
-    // 临时更改连接状态
-    sock_fd_ = -1;
-    connected_ = false;
+    int temp_sock_fd = -1;
+
+    // 创建新socket
+    temp_sock_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (temp_sock_fd == -1)
+    {
+        std::cerr << "创建临时socket失败" << std::endl;
+        return false;
+    }
+
+    // 使用RAII管理临时socket
+    SocketGuard guard(temp_sock_fd);
 
     // 尝试连接新端口
-    if (!connect(port))
+    struct sockaddr_in server_addr;
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(port);
+    server_addr.sin_addr.s_addr = inet_addr(server_ip_.c_str());
+
+    if (::connect(temp_sock_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0)
     {
-        // 恢复原始连接状态
-        sock_fd_ = old_sock_fd;
-        connected_ = old_connected;
+        std::cerr << "临时连接失败" << std::endl;
         return false;
     }
 
     // 发送数据
-    bool result = send(data);
+    size_t total_sent = 0;
+    while (total_sent < data.length())
+    {
+        ssize_t sent = ::send(temp_sock_fd, data.c_str() + total_sent, data.length() - total_sent,
+                              MSG_NOSIGNAL);
+        if (sent <= 0)
+        {
+            if (errno == EINTR)
+                continue;
+            std::cerr << "发送数据失败: " << strerror(errno) << std::endl;
+            return false;
+        }
+        total_sent += sent;
+    }
 
-    // 关闭临时连接
-    close(sock_fd_);
-    
-    // 恢复原始连接状态
-    sock_fd_ = old_sock_fd;
-    connected_ = old_connected;
-
-    return result;
+    return true;
 }
 
 void TcpClient::setConnectionCallback(std::function<void(bool)> callback)

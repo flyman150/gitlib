@@ -6,8 +6,10 @@
 
 #include <algorithm>
 #include <atomic>
+#include <chrono>
 #include <cstring>
 #include <iostream>
+#include <mutex>
 #include <string>
 #include <thread>
 #include <vector>
@@ -93,7 +95,10 @@ public:
             // 使用智能指针管理客户端线程
             auto client_thread =
                 std::make_unique<std::thread>(&TcpServer::handleClient, this, client_socket);
-            client_threads_.push_back(std::move(client_thread));
+            {
+                std::lock_guard<std::mutex> lock(threads_mutex_);
+                client_threads_.push_back(std::move(client_thread));
+            }
 
             // 清理已完成的线程
             cleanupFinishedThreads();
@@ -107,24 +112,34 @@ public:
 
         running_ = false;
 
-        // 关闭服务器socket
+        // 关闭服务器socket，这会导致accept返回错误
         if (server_fd_ != -1)
         {
+            shutdown(server_fd_, SHUT_RDWR);  // 先关闭读写
             close(server_fd_);
             server_fd_ = -1;
         }
 
-        // 等待所有客户端线程结束
+        // 等待所有客户端线程结束，设置超时防止死锁
+        auto timeout = std::chrono::system_clock::now() + std::chrono::seconds(5);
         for (auto& thread : client_threads_)
         {
             if (thread && thread->joinable())
             {
-                thread->join();
+                while (std::chrono::system_clock::now() < timeout)
+                {
+                    if (thread->joinable())
+                    {
+                        thread->join();
+                        break;
+                    }
+                    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                }
             }
         }
         client_threads_.clear();
 
-        std::cout << "服务器已停止" << std::endl;
+        std::cout << "服务器已安全停止" << std::endl;
     }
 
 private:
@@ -138,7 +153,10 @@ private:
             ~SocketGuard()
             {
                 if (fd != -1)
+                {
+                    shutdown(fd, SHUT_RDWR);
                     close(fd);
+                }
             }
         } guard(client_socket);
 
@@ -177,9 +195,10 @@ private:
 
     void cleanupFinishedThreads()
     {
+        std::lock_guard<std::mutex> lock(threads_mutex_);  // 添加互斥锁保护
         client_threads_.erase(
             std::remove_if(client_threads_.begin(), client_threads_.end(),
-                           [](const auto& thread) { return thread && !thread->joinable(); }),
+                           [](const auto& thread) { return !thread || !thread->joinable(); }),
             client_threads_.end());
     }
 
@@ -187,15 +206,17 @@ private:
     int port_;
     std::atomic<bool> running_;
     std::vector<std::unique_ptr<std::thread>> client_threads_;
+    std::mutex threads_mutex_;  // 添加互斥锁保护线程容器
 };
 
 int main(int argc, char* argv[])
 {
     int port = 8888;  // 默认端口
-    if (argc > 1) {
+    if (argc > 1)
+    {
         port = std::stoi(argv[1]);
     }
-    
+
     TcpServer server(port);
     std::cout << "正在启动服务器..." << std::endl;
     server.start();

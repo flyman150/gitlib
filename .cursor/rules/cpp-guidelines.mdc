@@ -1,0 +1,30 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# C++代码规范指南
+
+## 代码风格
+- 使用clang-format进行代码格式化，配置文件：[.clang-format](mdc:.clang-format)
+- 使用clang-tidy进行静态代码分析，配置文件：[.clang-tidy](mdc:.clang-tidy)
+
+## 内存管理
+- 优先使用RAII和智能指针管理资源
+- 避免原始指针，必要时使用`std::unique_ptr`或`std::shared_ptr`
+- 使用`std::vector`等容器代替原始数组
+
+## 线程安全
+- 使用RAII风格的锁管理（如`std::lock_guard`、`std::unique_lock`）
+- 避免嵌套锁，防止死锁
+- 回调函数不应在持有锁的情况下调用
+- 使用`std::atomic`管理原子操作
+
+## 错误处理
+- 使用异常处理机制而不是错误码
+- 保证异常安全性
+- 使用RAII确保资源在异常情况下也能正确释放
+
+## 核心文件
+- [tcp_client.h](mdc:tcp_client.h): TCP客户端类声明
+- [tcp_client.cpp](mdc:tcp_client.cpp): TCP客户端类实现

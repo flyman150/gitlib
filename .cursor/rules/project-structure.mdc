@@ -1,0 +1,26 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# TCP客户端项目结构指南
+
+## 核心文件
+- [tcp_client.h](mdc:tcp_client.h): TCP客户端类的声明
+- [tcp_client.cpp](mdc:tcp_client.cpp): TCP客户端类的实现
+- [CMakeLists.txt](mdc:CMakeLists.txt): 项目构建配置
+
+## 目录结构
+- `src/`: 源代码目录
+- `include/`: 头文件目录
+- `tests/`: 单元测试目录
+- `build/`: 构建输出目录（自动生成）
+
+## 构建脚本
+- [build.sh](mdc:build.sh): 主构建脚本
+- [test_build.sh](mdc:test_build.sh): 测试构建脚本
+- [format_all.sh](mdc:format_all.sh): 代码格式化脚本
+
+## 配置文件
+- [.clang-format](mdc:.clang-format): clang-format 代码格式化配置
+- [.clang-tidy](mdc:.clang-tidy): clang-tidy 静态分析配置

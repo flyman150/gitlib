@@ -1,0 +1,31 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 构建规范指南
+
+## 构建系统
+- 使用CMake作为构建系统
+- 主配置文件：[CMakeLists.txt](mdc:CMakeLists.txt)
+- 支持Debug和Release两种构建类型
+
+## 构建脚本
+- [build.sh](mdc:build.sh): 主构建脚本，用于编译项目
+- [test_build.sh](mdc:test_build.sh): 测试构建脚本，包含内存检查等
+- [format_all.sh](mdc:format_all.sh): 代码格式化脚本
+
+## 依赖管理
+- 使用CMake的find_package管理第三方依赖
+- 版本要求在CMakeLists.txt中明确指定
+- 优先使用系统库的稳定版本
+
+## 编译选项
+- 启用警告（-Wall -Wextra）
+- 启用优化（Release模式）
+- 启用调试信息（Debug模式）
+
+## 测试和检查
+- 使用CTest运行单元测试
+- 使用Valgrind进行内存检查
+- 使用clang-tidy进行静态代码分析
